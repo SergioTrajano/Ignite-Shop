@@ -12,7 +12,6 @@ export const HomeContainer = styled("main", {
 
 export const Product = styled("a", {
     minWidth: 540,
-    //padding: "0.25rem",
     borderRadius: 8,
     background: "linear-gradient(100deg, #1ea483 0%, #7465d4 100%)",
     overflow: "hidden",
