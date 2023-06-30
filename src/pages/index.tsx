@@ -47,7 +47,7 @@ export default function Home({ products }: HomeProps) {
 
                         <footer>
                             <strong>{product.name}</strong>
-                            <span>R$ {product.price / 100}</span>
+                            <span>{product.price}</span>
                         </footer>
                     </Product>
                 );
@@ -68,7 +68,10 @@ export const getStaticProps: GetStaticProps = async () => {
             id: product.id,
             name: product.name,
             imageURL: product.images[0],
-            price: productPrice.unit_amount,
+            price: new Intl.NumberFormat("pt-br", {
+                style: "currency",
+                currency: "BRL",
+            }).format(productPrice.unit_amount! / 100),
         };
     });
 
