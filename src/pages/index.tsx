@@ -8,7 +8,8 @@ import { stripe } from "@/libs/stripe";
 
 import "keen-slider/keen-slider.min.css";
 
-import { GetServerSideProps } from "next";
+import { GetStaticProps } from "next";
+import Link from "next/link";
 
 interface HomeProps {
     products: {
@@ -34,29 +35,31 @@ export default function Home({ products }: HomeProps) {
         >
             {products.map((product) => {
                 return (
-                    <Product
+                    <Link
                         key={product.id}
-                        className="keen-slider__slide"
+                        href={`/product/${product.id}`}
                     >
-                        <Image
-                            src={product.imageURL}
-                            alt=""
-                            width={520}
-                            height={480}
-                        />
+                        <Product className="keen-slider__slide">
+                            <Image
+                                src={product.imageURL}
+                                alt=""
+                                width={520}
+                                height={480}
+                            />
 
-                        <footer>
-                            <strong>{product.name}</strong>
-                            <span>R$ {product.price / 100}</span>
-                        </footer>
-                    </Product>
+                            <footer>
+                                <strong>{product.name}</strong>
+                                <span>{product.price}</span>
+                            </footer>
+                        </Product>
+                    </Link>
                 );
             })}
         </HomeContainer>
     );
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
     const { data } = await stripe.products.list({
         expand: ["data.default_price"],
     });
@@ -68,7 +71,10 @@ export const getServerSideProps: GetServerSideProps = async () => {
             id: product.id,
             name: product.name,
             imageURL: product.images[0],
-            price: productPrice.unit_amount,
+            price: new Intl.NumberFormat("pt-br", {
+                style: "currency",
+                currency: "BRL",
+            }).format(productPrice.unit_amount! / 100),
         };
     });
 
@@ -76,5 +82,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
         props: {
             products,
         },
+        revalidate: 60 * 60 * 2,
     };
 };
