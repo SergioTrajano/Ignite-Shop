@@ -30,3 +30,10 @@ Aplicação que permite a compra de camisetas. Usa o Stripe para lidar com o pag
 ## 🏁 Rodando a aplicação
 
 Como a aplicação usa Stripe, não é possível roda-la localmente fazendo o clone. Para acessar o projeto confira o link do [deploy](https://ignite-shop-eight-wheat.vercel.app/)
+
+Para testar o fluxo de compra, no site da Stripe:
+- Email: qualquer email válido;
+- Número do cartão: 4242 4242 4242 4242
+- Data de validade: qualquer data futura;
+- CVC: quaisquer 3 digitos;
+- Nome no cartão: qualquer nome;
