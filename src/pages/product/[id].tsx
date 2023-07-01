@@ -70,7 +70,12 @@ export default function Product({ product }: ProductProps) {
 
 export const getStaticPaths: GetStaticPaths = async () => {
     return {
-        paths: [],
+        paths: [
+            { params: { id: "prod_OAtA997X8EJSpX" } },
+            { params: { id: "prod_OAt8mSNpFh1rMV" } },
+            { params: { id: "prod_OAt7sF26J768zb" } },
+            { params: { id: "prod_OAt6Bz4PUNWYsN" } },
+        ],
         fallback: "blocking",
     };
 };
